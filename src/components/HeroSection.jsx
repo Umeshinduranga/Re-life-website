@@ -1,47 +1,99 @@
-import React, { useState } from 'react';
-import { FiSend } from 'react-icons/fi';
-import { HiPaperClip } from 'react-icons/hi2';
+import React, { useEffect, useRef, useState } from 'react';
 import { BsClock } from 'react-icons/bs';
 import { MdOutlineBarChart } from 'react-icons/md';
+import SplitText from './animations/SplitText';
+import heroVideo from '../assets/Memory_Flashback_to_Present_Clarity.mp4';
 
+
+// hero section text animation
 const HeroSection = () => {
-  const [message, setMessage] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+  const subtitleRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (subtitleRef.current) {
+      observer.observe(subtitleRef.current);
+    }
+
+    return () => {
+      if (subtitleRef.current) {
+        observer.unobserve(subtitleRef.current);
+      }
+    };
+  }, []);
 
   return (
-    <section id="hero" className="min-h-screen bg-cream pt-24 pb-16 px-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Main Heading */}
-        <div className="text-center mb-12 mt-16 animate-fadeIn">
-          <h1 className="text-6xl md:text-7xl font-black text-dark-text mb-6 leading-tight">
-            Your AI Powerrd Companion
-            <br />
-            for Addiction Recovery
-          </h1>
-          <p className="text-lg text-dark-text/70 max-w-3xl mx-auto">
-            24/7 personalized support using advanced RAG technology and evidence-based therapy
-          </p>
-        </div>
+    <section id="hero" className="relative min-h-screen bg-cream overflow-hidden">
+      {/* Video Background */}
+      <div className="absolute inset-0 w-full h-full">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+        {/* Dark overlay for better text visibility */}
+        <div className="absolute inset-0 bg-black/40"></div>
+      </div>
 
-        {/* CTA Button */}
-        <div className="flex justify-center mb-16 animate-scaleIn animation-delay-200">
-          <button className="px-12 py-4 bg-warm-gray/40 hover:bg-warm-gray/50 text-dark-text rounded-full text-lg font-medium transition-all duration-800 ease-in-out hover:scale-105 hover:shadow-lg">
-            Start here
-          </button>
-        </div>
+      {/* Content overlay */}
+      <div className="relative z-10 min-h-screen flex flex-col justify-center pt-24 pb-16 px-6">
+        <div className="max-w-6xl mx-auto w-full">
+          {/* Main Heading */}
+          <div className="text-center mb-12">
+            <SplitText 
+              text="Your AI Powered Companion for Addiction Recovery"
+              tag="h1"
+              className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight drop-shadow-2xl"
+              splitType="chars"
+              delay={30}      
+              duration={0.5}
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+            />
+            <p 
+              ref={subtitleRef}
+              className={`text-lg md:text-xl text-white/90 max-w-3xl mx-auto drop-shadow-lg transition-all duration-1000 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              24/7 personalized support using advanced RAG technology and evidence-based therapy
+            </p>
+          </div>
 
-        {/* Feature Pills */}
-        <div className="flex flex-wrap justify-center gap-8 mb-20 text-dark-text animate-fadeIn animation-delay-400">
-          <div className="flex items-center gap-2 ">
-            <BsClock className="text-xl" />
-            <span className="font-medium">Available 24/7</span>
+          {/* CTA Button */}
+          <div className="flex justify-center mb-16 animate-scaleIn animation-delay-200">
+            <button className="px-12 py-4 bg-white/20 backdrop-blur-md hover:bg-white/30 text-white border border-white/30 rounded-full text-lg font-medium transition-all duration-800 ease-in-out hover:scale-105 hover:shadow-2xl">
+              Start here
+            </button>
           </div>
-          <div className="flex items-center gap-2 ">
-            <MdOutlineBarChart className="text-xl" />
-            <span className="font-medium">3 Addiction types supported</span>
-          </div>
-          <div className="flex items-center gap-2 ">
-            <span className="text-xl">✦</span>
-            <span className="font-medium">Evidence based Approach</span>
+
+          {/* Feature Pills */}
+          <div className="flex flex-wrap justify-center gap-8 text-white animate-fadeIn animation-delay-400">
+            <div className="flex items-center gap-2">
+              <BsClock className="text-xl" />
+              <span className="font-medium drop-shadow-lg">Available 24/7</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <MdOutlineBarChart className="text-xl" />
+              <span className="font-medium drop-shadow-lg">3 Addiction types supported</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xl">✦</span>
+              <span className="font-medium drop-shadow-lg">Evidence based Approach</span>
+            </div>
           </div>
         </div>
       </div>
