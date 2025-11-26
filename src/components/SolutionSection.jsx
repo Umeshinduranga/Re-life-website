@@ -44,12 +44,12 @@ const SolutionSection = () => {
   ];
 
   return (
-    <section id="technology" className="min-h-screen bg-cream pt-24 pb-16 px-6">
+    <section id="solution" className="min-h-screen bg-cream pt-24 pb-16 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
-        <div className="text-center mb-16 animate-fadeIn">
+        <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black text-dark-text mb-6 leading-tight">
-            MEET RE-LIFE, YOUR PERRONAL
+            MEET RE-LIFE, YOUR PERSONAL
             <br />
             RECOVERY AI
           </h2>
