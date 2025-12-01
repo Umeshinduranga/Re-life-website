@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BsPersonPlus, BsChatDots, BsGraphUp, BsShield, BsBookmark } from 'react-icons/bs';
 
 const HowItWorksSection = () => {
+  const [visibleSteps, setVisibleSteps] = useState([]);
+  const stepRefs = useRef([]);
+
+  useEffect(() => {
+    const currentRefs = stepRefs.current;
+    const observers = currentRefs.map((ref, index) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setVisibleSteps(prev => [...new Set([...prev, index])]);
+          }
+        },
+        { threshold: 0.2, rootMargin: '-50px' }
+      );
+
+      if (ref) observer.observe(ref);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer, index) => {
+        if (currentRefs[index]) {
+          observer.unobserve(currentRefs[index]);
+        }
+      });
+    };
+  }, []);
+
   const steps = [
     {
       number: "01",
@@ -71,9 +99,20 @@ const HowItWorksSection = () => {
           {/* Steps */}
           <div className="space-y-16">
             {steps.map((step, index) => (
-              <div key={index} className={`relative flex flex-col md:flex-row items-center gap-8 ${step.position === 'right' ? 'md:flex-row-reverse' : ''}`}>
+              <div 
+                key={index} 
+                ref={el => stepRefs.current[index] = el}
+                className={`relative flex flex-col md:flex-row items-center gap-8 ${step.position === 'right' ? 'md:flex-row-reverse' : ''}`}
+              >
                 {/* Card */}
-                <div className={`w-full md:w-5/12 bg-soft-pink rounded-3xl p-8 transition-all duration-700 ease-in-out hover:scale-[1.05] hover:shadow-2xl hover:shadow-warm-gray/20 hover:-translate-y-2 cursor-pointer group border-2 border-transparent hover:border-warm-gray/30 relative overflow-hidden`}>
+                <div className={`w-full md:w-5/12 bg-soft-pink rounded-3xl p-8 transition-all duration-1000 ease-out hover:scale-[1.05] hover:shadow-2xl hover:shadow-warm-gray/20 hover:-translate-y-2 cursor-pointer group border-2 border-transparent hover:border-warm-gray/30 relative overflow-hidden
+                  ${visibleSteps.includes(index) 
+                    ? 'opacity-100 translate-x-0' 
+                    : step.position === 'left' 
+                      ? 'opacity-0 -translate-x-32' 
+                      : 'opacity-0 translate-x-32'
+                  }`}
+                >
                   {/* Glow effect on hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-warm-gray/0 via-warm-gray/0 to-warm-gray/0 group-hover:from-warm-gray/5 group-hover:via-transparent group-hover:to-warm-gray/5 transition-all duration-700 rounded-3xl"></div>
                   
@@ -94,7 +133,9 @@ const HowItWorksSection = () => {
                 </div>
 
                 {/* Center Circle */}
-                <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400/20 to-green-400/20 border-4 border-cream items-center justify-center">
+                <div className={`hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400/20 to-green-400/20 border-4 border-cream items-center justify-center transition-all duration-700 ease-out
+                  ${visibleSteps.includes(index) ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
+                >
                   <div className={`w-8 h-8 rounded-full ${step.iconBg}`}></div>
                 </div>
 
