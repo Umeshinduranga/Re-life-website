@@ -7,6 +7,7 @@ import SolutionSection from './components/SolutionSection';
 import FeaturesSection from './components/FeaturesSection';
 import HowItWorksSection from './components/HowItWorksSection';
 import TechnologySection from './components/TechnologySection';
+import FAQSection from './components/FAQSection';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <FeaturesSection />
         <HowItWorksSection />
         <TechnologySection />
+        <FAQSection />
       </main>
     </div>
   );
