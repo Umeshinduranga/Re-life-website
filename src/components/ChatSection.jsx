@@ -4,6 +4,7 @@ import { HiPaperClip } from 'react-icons/hi2';
 import { BsPerson } from 'react-icons/bs';
 import { BiBot } from 'react-icons/bi';
 import BlurText from './animations/BlurText';
+import Plasma from './Plasma';
 
 const ChatSection = () => {
   const [message, setMessage] = useState('');
@@ -63,20 +64,21 @@ const ChatSection = () => {
       { threshold: 0.3 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentSection = sectionRef.current;
+    if (currentSection) {
+      observer.observe(currentSection);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentSection) {
+        observer.unobserve(currentSection);
       }
     };
   }, []);
 
   return (
-    <section id="chat" className="min-h-screen bg-cream pt-24 pb-16 px-6" ref={sectionRef}>
-      <div className="max-w-6xl mx-auto">
+    <section id="chat" className="min-h-screen bg-black pt-0 pb-16 px-6 relative" ref={sectionRef}>
+      <div className="relative z-10 max-w-6xl mx-auto pt-24">
         {/* Section Header */}
         <div className="text-center mb-12">
           <div className="inline-block px-6 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6">

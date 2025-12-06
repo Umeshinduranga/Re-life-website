@@ -22,8 +22,8 @@ function App() {
         <FeaturesSection />
         <HowItWorksSection />
         <TechnologySection />
-        <FAQSection />
         <TeamSection />
+        <FAQSection />
       </main>
     </div>
   );

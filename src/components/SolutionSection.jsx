@@ -5,6 +5,7 @@ import { FiArrowRight } from 'react-icons/fi';
 import { MdOutlineHealthAndSafety } from 'react-icons/md';
 import { TbPill } from 'react-icons/tb';
 import { BiDevices } from 'react-icons/bi';
+import Plasma from './Plasma';
 
 const SolutionSection = () => {
   const steps = [
@@ -44,8 +45,20 @@ const SolutionSection = () => {
   ];
 
   return (
-    <section id="solution" className="min-h-screen bg-cream pt-24 pb-16 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section id="solution" className="min-h-screen bg-black pt-24 pb-0 px-6 relative">
+      {/* Plasma Background */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none" style={{ height: '200vh', top: 0 }}>
+        <Plasma 
+          color="#06b6d4"
+          speed={0.5}
+          direction="forward"
+          scale={1.2}
+          opacity={0.6}
+          mouseInteractive={true}
+        />
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto">
         {/* Heading */}
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black text-dark-text mb-6 leading-tight">

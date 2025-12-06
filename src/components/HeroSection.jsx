@@ -20,19 +20,20 @@ const HeroSection = () => {
       { threshold: 0.1 }
     );
 
-    if (subtitleRef.current) {
-      observer.observe(subtitleRef.current);
+    const currentSubtitle = subtitleRef.current;
+    if (currentSubtitle) {
+      observer.observe(currentSubtitle);
     }
 
     return () => {
-      if (subtitleRef.current) {
-        observer.unobserve(subtitleRef.current);
+      if (currentSubtitle) {
+        observer.unobserve(currentSubtitle);
       }
     };
   }, []);
 
   return (
-    <section id="hero" className="relative min-h-screen bg-cream overflow-hidden">
+    <section id="hero" className="relative min-h-screen bg-black overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full">
         <video 

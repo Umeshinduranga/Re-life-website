@@ -58,7 +58,7 @@ const TechnologySection = () => {
   ];
 
   return (
-    <section id="technology" className="min-h-screen bg-cream pt-24 pb-16 px-6">
+    <section id="technology" className="min-h-screen bg-black pt-24 pb-16 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
         <div className="text-center mb-16">

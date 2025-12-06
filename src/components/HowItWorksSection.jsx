@@ -79,7 +79,7 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <section id="how-it-works" className="min-h-screen bg-cream pt-24 pb-16 px-6">
+    <section id="how-it-works" className="min-h-screen bg-black pt-24 pb-16 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <div className="text-center mb-20">

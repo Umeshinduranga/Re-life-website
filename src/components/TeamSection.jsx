@@ -122,7 +122,7 @@ const TeamSection = () => {
               onMouseEnter={() => setHoveredMember(member.id)}
               onMouseLeave={() => setHoveredMember(null)}
             >
-              <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-white/30 transition-all duration-500 hover:transform hover:scale-105">
+              <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-white/30 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/20">
                 {/* Image Container */}
                 <div className="relative h-80 overflow-hidden bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-orange-500/20">
                   <img
