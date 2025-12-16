@@ -7,6 +7,24 @@ const hexToRgb = hex => {
   return [parseInt(result[1], 16) / 255, parseInt(result[2], 16) / 255, parseInt(result[3], 16) / 255];
 };
 
+// Mobile and performance detection
+const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const isLowPerformance = () => {
+  try {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) return true;
+    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    if (debugInfo) {
+      const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+      return /SwiftShader|llvmpipe|Mesa|software/i.test(renderer);
+    }
+  } catch(e) {
+    return true;
+  }
+  return false;
+};
+
 const vertex = `#version 300 es
 precision highp float;
 in vec2 position;
@@ -93,22 +111,33 @@ export const Plasma = ({
   useEffect(() => {
     if (!containerRef.current) return;
 
+    // Skip WebGL on low-performance devices, use CSS fallback
+    if (isLowPerformance()) {
+      containerRef.current.style.background = `radial-gradient(circle at center, ${color}33, transparent)`;
+      return;
+    }
+
     const useCustomColor = color ? 1.0 : 0.0;
     const customColorRgb = color ? hexToRgb(color) : [1, 1, 1];
 
     const directionMultiplier = direction === 'reverse' ? -1.0 : 1.0;
 
+    // Adaptive DPR for better mobile performance
+    const adaptiveDPR = isMobile() ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
+
     const renderer = new Renderer({
       webgl: 2,
       alpha: true,
-      antialias: false,
-      dpr: Math.min(window.devicePixelRatio || 1, 2)
+      antialias: false, // Disable antialiasing for performance
+      dpr: adaptiveDPR
     });
     const gl = renderer.gl;
     const canvas = gl.canvas;
     canvas.style.display = 'block';
     canvas.style.width = '100%';
     canvas.style.height = '100%';
+    canvas.style.willChange = 'transform';
+    canvas.style.transform = 'translateZ(0)';
     containerRef.current.appendChild(canvas);
 
     const geometry = new Triangle(gl);
@@ -161,8 +190,18 @@ export const Plasma = ({
     setSize();
 
     let raf = 0;
+    let lastFrameTime = 0;
+    const targetFPS = isMobile() ? 30 : 60; // Lower FPS on mobile
+    const frameInterval = 1000 / targetFPS;
     const t0 = performance.now();
     const loop = t => {
+      // Throttle frame rate on mobile
+      if (isMobile() && t - lastFrameTime < frameInterval) {
+        raf = requestAnimationFrame(loop);
+        return;
+      }
+      lastFrameTime = t;
+      
       let timeValue = (t - t0) * 0.001;
       if (direction === 'pingpong') {
         const pingpongDuration = 10;

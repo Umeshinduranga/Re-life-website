@@ -4,7 +4,6 @@ import { HiPaperClip } from 'react-icons/hi2';
 import { BsPerson } from 'react-icons/bs';
 import { BiBot } from 'react-icons/bi';
 import BlurText from './animations/BlurText';
-import Plasma from './Plasma';
 
 const ChatSection = () => {
   const [message, setMessage] = useState('');

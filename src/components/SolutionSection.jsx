@@ -5,7 +5,6 @@ import { FiArrowRight } from 'react-icons/fi';
 import { MdOutlineHealthAndSafety } from 'react-icons/md';
 import { TbPill } from 'react-icons/tb';
 import { BiDevices } from 'react-icons/bi';
-import Plasma from './Plasma';
 
 const SolutionSection = () => {
   const steps = [
@@ -46,27 +45,16 @@ const SolutionSection = () => {
 
   return (
     <section id="solution" className="min-h-screen bg-black pt-24 pb-0 px-6 relative">
-      {/* Plasma Background */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none" style={{ height: '200vh', top: 0 }}>
-        <Plasma 
-          color="#06b6d4"
-          speed={0.5}
-          direction="forward"
-          scale={1.2}
-          opacity={0.6}
-          mouseInteractive={true}
-        />
-      </div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Heading */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-black text-dark-text mb-6 leading-tight">
+          <h2 className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
             MEET RE-LIFE, YOUR PERSONAL
             <br />
             RECOVERY AI
           </h2>
-          <p className="text-lg text-dark-text/70 max-w-3xl mx-auto">
+          <p className="text-lg text-white/70 max-w-3xl mx-auto">
             Combining cutting-edge RAG (Retrieval-Augmented Generation) technology with evidence-based addiction recovery methods
           </p>
         </div>
