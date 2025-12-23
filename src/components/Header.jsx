@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import logo from '../assets/logo.svg';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -37,18 +38,12 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-3 group cursor-pointer">
-            <div className="relative">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center border border-white/20 group-hover:border-white/40 transition-all duration-300 group-hover:scale-110">
-                <span className="text-xs font-black text-white">LOGO</span>
-              </div>
-              {/* Glow effect */}
-              <div className="absolute inset-0 rounded-lg bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-            <h1 className="text-2xl font-black text-white tracking-wider relative">
-              RE-LIFE
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-white to-transparent group-hover:w-full transition-all duration-500"></span>
-            </h1>
+          <div className="flex items-center gap-3 group cursor-pointer relative">
+            <img src={logo} alt="RE-LIFE Logo" className="h-12 group-hover:scale-110 transition-all duration-300" />
+            {/* Glow effect */}
+            <div className="absolute inset-0 rounded-lg bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            {/* Bottom accent line animation */}
+            <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r from-white to-transparent group-hover:w-32 transition-all duration-500"></span>
           </div>
 
           {/* Navigation */}
