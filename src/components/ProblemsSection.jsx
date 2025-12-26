@@ -5,6 +5,13 @@ import { MdOutlineBarChart } from 'react-icons/md';
 import { TbPackage } from 'react-icons/tb';
 import { BiXCircle } from 'react-icons/bi';
 
+import img1 from '../assets/limitedaccessibility.jpg'; // Try .jpg
+import img2 from '../assets/highcosts.jpg';
+import img3 from '../assets/socialstigma.jpg';
+import img4 from '../assets/genericadvice.jpg';
+import img5 from '../assets/trackprogress.jpg';
+import img6 from '../assets/crisis.jpg';
+
 const ProblemsSection = () => {
   const [visibleCards, setVisibleCards] = useState([]);
   const sectionRef = useRef(null);
@@ -15,37 +22,37 @@ const ProblemsSection = () => {
       icon: <BsClock className="text-4xl" />,
       title: "Limited Accessibility",
       description: "24/7 counseling is rarely available when you need it most during critical moments",
-      image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop"
+      image: img1
     },
     {
       icon: <BsCurrencyDollar className="text-4xl" />,
       title: "High Costs",
       description: "Traditional therapy can cost $100-300 per session, making consistent support unaffordable",
-      image: "https://images.unsplash.com/photo-1579621970563-fbf46d40bfca?w=400&h=300&fit=crop"
+      image: img2
     },
     {
       icon: <BiXCircle className="text-4xl" />,
       title: "Social Stigma",
       description: "Fear of judgment prevents many from seeking the help they desperately need",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop"
+      image: img3
     },
     {
       icon: <TbPackage className="text-4xl" />,
       title: "Generic Advice",
       description: "One-size-fits-all programs ignore your unique situation and addiction type",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop"
+      image: img4
     },
     {
       icon: <MdOutlineBarChart className="text-4xl" />,
       title: "Hard to Track Progress",
       description: "Traditional therapy can cost $100-300 per session, making consistent support unaffordable",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop"
+      image: img5
     },
     {
       icon: <IoAlertCircleOutline className="text-4xl" />,
       title: "Crisis gaps",
       description: "Fear of judgment prevents many from seeking the help they desperately need",
-      image: "https://images.unsplash.com/photo-1516321318423-f06f70504504?w=400&h=300&fit=crop"
+      image: img6
     }
   ];
 

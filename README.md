@@ -60,7 +60,7 @@ Landing page/
 │   │   ├── SolutionSection.jsx     # AI solution showcase
 │   │   ├── FeaturesSection.jsx     # 6 key features
 │   │   ├── HowItWorksSection.jsx   # Step-by-step process
-│   │   ├── TechnologySection.jsx   # RAG technology explanation
+│   │   ├── TechnologySection.jsx   # RAG technology explanations
 │   │   └── FAQSection.jsx          # Expandable FAQ accordions
 │   ├── App.js
 │   ├── index.js
