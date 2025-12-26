@@ -1,149 +1,154 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { BsPersonPlus, BsChatDots, BsGraphUp, BsShield, BsBookmark } from 'react-icons/bs';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const HowItWorksSection = () => {
-  const [visibleSteps, setVisibleSteps] = useState([]);
-  const stepRefs = useRef([]);
+  const containerRef = useRef(null);
+  
+  // Theme Color
+  const THEME_COLOR = "#4766d6"; 
 
-  useEffect(() => {
-    const currentRefs = stepRefs.current;
-    const observers = currentRefs.map((ref, index) => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setVisibleSteps(prev => [...new Set([...prev, index])]);
-          }
-        },
-        { threshold: 0.2, rootMargin: '-50px' }
-      );
+  useGSAP(() => {
+    const steps = gsap.utils.toArray('.step-row');
 
-      if (ref) observer.observe(ref);
-      return observer;
+    // 1. LINE ANIMATION (Fills down)
+    gsap.to('.timeline-progress', {
+      height: '100%',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.timeline-container',
+        start: 'top center',
+        end: 'bottom bottom', 
+        scrub: 1,
+      }
     });
 
-    return () => {
-      observers.forEach((observer, index) => {
-        if (currentRefs[index]) {
-          observer.unobserve(currentRefs[index]);
+    // 2. CIRCLE FILL ANIMATION
+    steps.forEach((step) => {
+      const circle = step.querySelector('.step-circle');
+      const iconInsideCircle = step.querySelector('.step-circle-inner');
+      
+      gsap.to(circle, {
+        backgroundColor: THEME_COLOR,
+        borderColor: THEME_COLOR,
+        duration: 0.4,
+        scrollTrigger: {
+          trigger: step,
+          start: 'top 55%',
+          toggleActions: 'play reverse play reverse'
         }
       });
-    };
-  }, []);
+      
+      gsap.to(iconInsideCircle, {
+        scale: 0.5, 
+        scrollTrigger: {
+          trigger: step,
+          start: 'top 55%',
+          toggleActions: 'play reverse play reverse'
+        }
+      });
+    });
+
+    // 3. CARD ANIMATION
+    steps.forEach((step) => {
+      const card = step.querySelector('.step-card');
+      const icon = step.querySelector('.step-icon');
+      
+      const stepTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: step,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+
+      stepTl.to(card, { y: 0, opacity: 1, duration: 1, ease: 'power4.out' })
+            .fromTo(icon, { scale: 0, rotation: -45 }, { scale: 1, rotation: 0, duration: 0.6, ease: 'back.out(1.7)' }, "-=0.5");
+    });
+
+  }, { scope: containerRef });
 
   const steps = [
-    {
-      number: "01",
-      icon: <BsPersonPlus className="text-3xl" />,
-      title: "Create Your Profile",
-      description: "Set up your addiction profile and recovery goals in a safe, private environment",
-      iconBg: "bg-cyan-500/20",
-      iconColor: "text-cyan-400",
-      position: "left"
-    },
-    {
-      number: "02",
-      icon: <BsChatDots className="text-3xl" />,
-      title: "Chat Anytime",
-      description: "Talk to your AI counselor whenever you need support - day or night, weekends included",
-      iconBg: "bg-pink-500/20",
-      iconColor: "text-pink-400",
-      position: "right"
-    },
-    {
-      number: "03",
-      icon: <BsGraphUp className="text-3xl" />,
-      title: "Track Progress",
-      description: "Log your journey and visualize your improvement with detailed analytics and insights",
-      iconBg: "bg-blue-500/20",
-      iconColor: "text-blue-400",
-      position: "left"
-    },
-    {
-      number: "04",
-      icon: <BsShield className="text-3xl" />,
-      title: "Manage Triggers",
-      description: "Identify patterns and build effective coping strategies with AI-powered guidance",
-      iconBg: "bg-orange-500/20",
-      iconColor: "text-orange-400",
-      position: "right"
-    },
-    {
-      number: "05",
-      icon: <BsBookmark className="text-3xl" />,
-      title: "Achieve Milestones",
-      description: "Celebrate victories and stay motivated with milestone tracking and achievements",
-      iconBg: "bg-green-500/20",
-      iconColor: "text-green-400",
-      position: "left"
-    }
+    { number: "01", icon: <BsPersonPlus />, title: "Create Profile", description: "Start your journey in a private, safe space designed for your peace of mind.", color: "bg-slate-100 text-slate-600" },
+    { number: "02", icon: <BsChatDots />, title: "Chat Support", description: "Connect with AI counseling anytime. No judgment, just constant support.", color: "bg-slate-100 text-slate-600" },
+    { number: "03", icon: <BsGraphUp />, title: "Track Growth", description: "Watch your progress unfold with calm, easy-to-read daily insights.", color: "bg-slate-100 text-slate-600" },
+    { number: "04", icon: <BsShield />, title: "Safe Guarding", description: "Identify triggers gently and build resilience strategies at your own pace.", color: "bg-slate-100 text-slate-600" },
+    { number: "05", icon: <BsBookmark />, title: "Milestones", description: "Celebrate every step forward. Your recovery is a marathon, not a sprint.", color: "bg-slate-100 text-slate-600" }
   ];
 
   return (
-    <section id="how-it-works" className="min-h-screen bg-black pt-24 pb-16 px-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Heading */}
-        <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-6xl font-black text-dark-text mb-6 leading-tight">
-            How <span className="text-warm-gray">It Works</span>
+    <section ref={containerRef} className="min-h-screen bg-[#e3e8ef] py-32 px-6 overflow-hidden font-sans pb-48">
+      <div className="max-w-5xl mx-auto">
+        
+        {/* Header */}
+        <div className="text-center mb-28">
+          <span className="inline-block py-1 px-4 rounded-full bg-white border border-slate-200 text-slate-500 text-sm font-medium tracking-wide mb-6 shadow-sm">
+            THE PROCESS
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-700 mb-6 tracking-tight">
+            A Gentle Path to <span style={{ color: THEME_COLOR }}>Recovery</span>
           </h2>
-          <p className="text-lg text-dark-text/70 max-w-2xl mx-auto">
-            Start your recovery journey in five simple steps
+          <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            We believe in making the hard things feel a little softer. 
+            Here is how we help you rebuild, step by step.
           </p>
         </div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-cyan-400 via-pink-400 via-blue-400 via-orange-400 to-green-400 opacity-30 hidden md:block"></div>
+        {/* Timeline Container */}
+        <div className="timeline-container relative">
+          
+          {/* TRACK (Static Gray Line) */}
+          <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-2 h-full bg-slate-300/40 rounded-full"></div>
+          
+          {/* PROGRESS (Animated Filling Line - Blue) */}
+          <div 
+            className="timeline-progress absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-2 h-0 rounded-full origin-top"
+            style={{ 
+              backgroundColor: THEME_COLOR, 
+              boxShadow: `0 0 20px ${THEME_COLOR}66`
+            }}
+          ></div>
 
           {/* Steps */}
-          <div className="space-y-16">
-            {steps.map((step, index) => (
-              <div 
-                key={index} 
-                ref={el => stepRefs.current[index] = el}
-                className={`relative flex flex-col md:flex-row items-center gap-8 ${step.position === 'right' ? 'md:flex-row-reverse' : ''}`}
-              >
-                {/* Card */}
-                <div className={`w-full md:w-5/12 bg-soft-pink rounded-3xl p-8 transition-all duration-1000 ease-out hover:scale-[1.05] hover:shadow-2xl hover:shadow-warm-gray/20 hover:-translate-y-2 cursor-pointer group border-2 border-transparent hover:border-warm-gray/30 relative overflow-hidden
-                  ${visibleSteps.includes(index) 
-                    ? 'opacity-100 translate-x-0' 
-                    : step.position === 'left' 
-                      ? 'opacity-0 -translate-x-32' 
-                      : 'opacity-0 translate-x-32'
-                  }`}
-                >
-                  {/* Glow effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-warm-gray/0 via-warm-gray/0 to-warm-gray/0 group-hover:from-warm-gray/5 group-hover:via-transparent group-hover:to-warm-gray/5 transition-all duration-700 rounded-3xl"></div>
+          <div className="space-y-24 relative z-10">
+            {steps.map((step, index) => {
+              const isEven = index % 2 === 0;
+              return (
+                <div key={index} className={`step-row relative flex flex-col md:flex-row items-center gap-12 ${!isEven ? 'md:flex-row-reverse' : ''}`}>
                   
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="text-5xl font-black text-warm-gray/40">{step.number}</span>
-                      <div className={`${step.iconBg} ${step.iconColor} w-14 h-14 rounded-xl flex items-center justify-center`}>
-                        {step.icon}
+                  {/* CENTRAL CIRCLE */}
+                  <div className="step-circle absolute left-4 md:left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-[#e3e8ef] border-4 border-slate-400 z-20 box-content transition-colors duration-500 flex items-center justify-center">
+                    <div className="step-circle-inner w-full h-full rounded-full bg-white transition-all duration-500"></div>
+                  </div>
+
+                  {/* Card */}
+                  <div className={`w-full md:w-[45%] pl-12 md:pl-0 step-card opacity-0 translate-y-20`}>
+                    <div className="group bg-white rounded-3xl p-8 border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-500 ease-out hover:-translate-y-1">
+                      <div className="flex justify-between items-start mb-6">
+                        <div className={`step-icon w-14 h-14 rounded-2xl ${step.color} flex items-center justify-center text-xl`}>
+                          {step.icon}
+                        </div>
+                        <span className="text-4xl font-bold text-slate-100 select-none font-serif">
+                          {step.number}
+                        </span>
+                      </div>
+                      <div className="text-content">
+                        <h3 className="text-xl font-bold text-slate-700 mb-3">{step.title}</h3>
+                        <p className="text-slate-500 leading-relaxed text-[15px]">{step.description}</p>
                       </div>
                     </div>
-                    <h3 className="text-2xl font-bold text-dark-text mb-3">
-                      {step.title}
-                    </h3>
-                    <p className="text-dark-text/70 leading-relaxed">
-                      {step.description}
-                    </p>
                   </div>
-                </div>
 
-                {/* Center Circle */}
-                <div className={`hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400/20 to-green-400/20 border-4 border-cream items-center justify-center transition-all duration-700 ease-out
-                  ${visibleSteps.includes(index) ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
-                >
-                  <div className={`w-8 h-8 rounded-full ${step.iconBg}`}></div>
+                  <div className="hidden md:block w-[45%]"></div>
                 </div>
-
-                {/* Spacer for alignment */}
-                <div className="hidden md:block w-5/12"></div>
-              </div>
-            ))}
+              );
+            })}
           </div>
+
         </div>
       </div>
     </section>

@@ -1,118 +1,137 @@
 import React from 'react';
-import { BsLightning, BsCpu, BsDatabase } from 'react-icons/bs';
-import { HiSparkles } from 'react-icons/hi2';
+
+// --- IMAGE IMPORTS ---
+// Adjust the path '../assets/' if your folder structure is different
+import ragImg from '../assets/rag.jpg';
+import nextImg from '../assets/next.jpg';
+import gptImg from '../assets/gpt.jpg';
+import vectorImg from '../assets/vector.jpeg'; // If this breaks, try .jpeg
+import cloudImg from '../assets/cloud.jpg';
+import syncImg from '../assets/sync.jpg';
 
 const TechnologySection = () => {
-  const technologies = [
-    {
-      icon: <HiSparkles className="text-4xl" />,
-      title: "RAG Technology",
-      description: "Retrieval-Augmented Generation for evidence-based responses",
-      iconBg: "bg-cyan-500/20",
-      iconColor: "text-cyan-400"
-    },
-    {
-      icon: <BsLightning className="text-4xl" />,
-      title: "Next.js 14",
-      description: "Blazing-fast performance and optimal user experience",
-      iconBg: "bg-blue-500/20",
-      iconColor: "text-blue-400"
-    },
-    {
-      icon: <BsCpu className="text-4xl" />,
-      title: "GPT-4 & Claude",
-      description: "OpenAI and Anthropic models for intelligent conversations",
-      iconBg: "bg-pink-500/20",
-      iconColor: "text-pink-400"
-    },
-    {
-      icon: <BsDatabase className="text-4xl" />,
-      title: "Vector Database",
-      description: "Pinecone for instant knowledge retrieval and MongoDB for secure data",
-      iconBg: "bg-green-500/20",
-      iconColor: "text-green-400"
-    }
+  
+  // 1. DATA FOR THE TECH STACK (Mapped to your local images)
+  const galleryItems = [
+    { text: 'RAG Intelligence', image: ragImg },
+    { text: 'Next.js 14', image: nextImg },
+    { text: 'GPT-4 Engine', image: gptImg },
+    { text: 'Vector DB', image: vectorImg },
+    { text: 'Secure Cloud', image: cloudImg },
+    { text: 'Real-time Sync', image: syncImg }
   ];
 
+  // We duplicate the items to create a seamless loop
+  const scrollingItems = [...galleryItems, ...galleryItems];
+
+  // 2. DATA FOR DIFFERENTIATORS
   const differentiators = [
-    {
-      title: "RAG Technology",
-      description: "ensures every response is grounded in peer-reviewed research and clinical best practices",
-      color: "text-cyan-400"
-    },
-    {
-      title: "Vector Search",
-      description: "retrieves the most relevant information instantly from thousands of resources",
-      color: "text-blue-400"
-    },
-    {
-      title: "Dual AI Models",
-      description: "combine the strengths of GPT-4 and Claude for empathetic, accurate support",
-      color: "text-pink-400"
-    },
-    {
-      title: "Secure Storage",
-      description: "with MongoDB ensures your data is encrypted and completely private",
-      color: "text-green-400"
-    }
+    { title: "RAG Technology", description: "Grounded in peer-reviewed research." },
+    { title: "Vector Search", description: "Retrieves relevant info instantly." },
+    { title: "Dual AI Models", description: "GPT-4 logic + Claude empathy." },
+    { title: "Secure Storage", description: "Encrypted & private data." }
   ];
 
   return (
-    <section id="technology" className="min-h-screen bg-black pt-24 pb-16 px-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Heading */}
+    <section 
+      id="technology" 
+      className="min-h-screen pt-24 pb-20 px-0 overflow-hidden relative"
+      style={{ backgroundColor: '#e3e8ef' }} 
+    >
+      <div className="w-full max-w-7xl mx-auto px-6">
+        
+        {/* --- HEADING --- */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-black text-dark-text mb-6 leading-tight">
-            Built on <span className="text-warm-gray">Cutting-Edge AI Technology</span>
+          <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6 leading-tight">
+            Built on <span style={{ color: '#4766d6' }}>Cutting-Edge AI</span>
           </h2>
-          <p className="text-lg text-dark-text/70 max-w-3xl mx-auto">
-            Powered by the latest advances in artificial intelligence and machine learning
+          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            Powered by the latest advances in artificial intelligence
           </p>
         </div>
 
-        {/* Technology Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {technologies.map((tech, index) => (
-            <div
-              key={index}
-              className="bg-soft-pink rounded-3xl p-8 transition-all duration-700 ease-in-out hover:scale-[1.05] hover:shadow-2xl hover:shadow-warm-gray/20 hover:-translate-y-2 cursor-pointer group border-2 border-transparent hover:border-warm-gray/30 relative overflow-hidden"
-            >
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-warm-gray/0 via-warm-gray/0 to-warm-gray/0 group-hover:from-warm-gray/5 group-hover:via-transparent group-hover:to-warm-gray/5 transition-all duration-700 rounded-3xl"></div>
-              
-              <div className="relative z-10 text-center">
-                <div className={`${tech.iconBg} ${tech.iconColor} w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6`}>
-                  {tech.icon}
+        {/* --- INFINITE SCROLLING MARQUEE --- */}
+        <div className="relative w-full overflow-hidden mb-20 mask-gradient">
+          
+          {/* The Sliding Track */}
+          <div className="flex w-max animate-infinite-scroll">
+            {scrollingItems.map((item, index) => (
+              <div 
+                key={index}
+                className="relative flex-shrink-0 w-[280px] mx-4 rounded-2xl overflow-hidden bg-white group"
+                style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}
+              >
+                {/* Image */}
+                <div className="h-40 overflow-hidden relative">
+                  <div className="absolute inset-0 bg-[#4766d6] opacity-0 group-hover:opacity-10 transition-opacity duration-300 z-10" />
+                  <img 
+                    src={item.image} 
+                    alt={item.text}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
                 </div>
-                <h3 className="text-xl font-bold text-dark-text mb-3">
-                  {tech.title}
-                </h3>
-                <p className="text-sm text-dark-text/70 leading-relaxed">
-                  {tech.description}
-                </p>
+                
+                {/* Text */}
+                <div className="p-5 text-center border-t border-[rgba(0,0,0,0.04)]">
+                  <h3 className="text-lg font-bold text-slate-700 group-hover:text-[#4766d6] transition-colors">
+                    {item.text}
+                  </h3>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* Fade effect on edges */}
+          <div className="absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-[#e3e8ef] to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-[#e3e8ef] to-transparent z-10 pointer-events-none"></div>
+
         </div>
 
-        {/* What Makes Different */}
-        <div className="bg-soft-pink/50 rounded-3xl p-12 border border-warm-gray/20">
-          <h3 className="text-3xl font-bold text-dark-text mb-8 text-center">
+        {/* --- DIFFERENTIATORS --- */}
+        <div 
+          className="bg-white rounded-3xl p-8 md:p-12 relative overflow-hidden"
+          style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}
+        >
+          <h3 className="text-2xl md:text-3xl font-bold text-slate-800 mb-10 text-center">
             What Makes Re-life Different?
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {differentiators.map((item, index) => (
-              <div key={index} className="flex items-start gap-4">
-                <span className={`text-2xl ${item.color} mt-1`}>•</span>
+              <div 
+                key={index} 
+                className="flex items-start gap-4 p-5 rounded-2xl transition-all duration-300 bg-slate-50 border border-slate-100 group hover:bg-white hover:border-[#4766d6]"
+                style={{ transition: 'all 0.3s ease' }}
+              >
+                <span className="text-2xl mt-0.5" style={{ color: '#4766d6' }}>•</span>
                 <div>
-                  <span className={`font-bold ${item.color}`}>{item.title}</span>
-                  <span className="text-dark-text/70"> {item.description}</span>
+                  <span className="font-bold block mb-1 text-slate-800 group-hover:text-[#4766d6] transition-colors">
+                    {item.title}
+                  </span>
+                  <span className="text-slate-600 text-sm leading-relaxed font-medium"> 
+                    {item.description}
+                  </span>
                 </div>
               </div>
             ))}
           </div>
         </div>
+
       </div>
+
+      {/* --- CSS STYLES --- */}
+      <style jsx>{`
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); } 
+        }
+        .animate-infinite-scroll {
+          animation: scroll 40s linear infinite;
+        }
+        .animate-infinite-scroll:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
     </section>
   );
 };

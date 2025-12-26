@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BsClock, BsCurrencyDollar } from 'react-icons/bs';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 import { MdOutlineBarChart } from 'react-icons/md';
@@ -6,81 +6,180 @@ import { TbPackage } from 'react-icons/tb';
 import { BiXCircle } from 'react-icons/bi';
 
 const ProblemsSection = () => {
+  const [visibleCards, setVisibleCards] = useState([]);
+  const sectionRef = useRef(null);
+  const cardRefs = useRef([]);
+
   const problems = [
     {
       icon: <BsClock className="text-4xl" />,
       title: "Limited Accessibility",
       description: "24/7 counseling is rarely available when you need it most during critical moments",
-      bgColor: "bg-soft-pink"
+      image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop"
     },
     {
       icon: <BsCurrencyDollar className="text-4xl" />,
       title: "High Costs",
       description: "Traditional therapy can cost $100-300 per session, making consistent support unaffordable",
-      bgColor: "bg-soft-pink"
+      image: "https://images.unsplash.com/photo-1579621970563-fbf46d40bfca?w=400&h=300&fit=crop"
     },
     {
       icon: <BiXCircle className="text-4xl" />,
       title: "Social Stigma",
       description: "Fear of judgment prevents many from seeking the help they desperately need",
-      bgColor: "bg-soft-pink"
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop"
     },
     {
       icon: <TbPackage className="text-4xl" />,
       title: "Generic Advice",
       description: "One-size-fits-all programs ignore your unique situation and addiction type",
-      bgColor: "bg-warm-gray/30"
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop"
     },
     {
       icon: <MdOutlineBarChart className="text-4xl" />,
       title: "Hard to Track Progress",
       description: "Traditional therapy can cost $100-300 per session, making consistent support unaffordable",
-      bgColor: "bg-warm-gray/30"
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop"
     },
     {
       icon: <IoAlertCircleOutline className="text-4xl" />,
       title: "Crisis gaps",
       description: "Fear of judgment prevents many from seeking the help they desperately need",
-      bgColor: "bg-warm-gray/30"
+      image: "https://images.unsplash.com/photo-1516321318423-f06f70504504?w=400&h=300&fit=crop"
     }
   ];
 
+  const scrollAnimationStyle = `
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .card-slide-left {
+      animation: slideInLeft 0.8s ease-out forwards;
+    }
+    
+    .card-slide-right {
+      animation: slideInRight 0.8s ease-out forwards;
+    }
+  `;
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.3,
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        // When section comes into view, start showing cards one by one
+        const interval = setInterval(() => {
+          setVisibleCards(prev => {
+            if (prev.length < problems.length) {
+              return [...prev, prev.length];
+            } else {
+              clearInterval(interval);
+              return prev;
+            }
+          });
+        }, 200); // 200ms delay between each card
+
+        return () => clearInterval(interval);
+      } else {
+        // When section goes out of view, hide all cards
+        setVisibleCards([]);
+      }
+    }, observerOptions);
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [problems.length]);
+
   return (
-    <section id="problems" className="min-h-screen bg-black pt-24 pb-16 px-6">
+    <section id="problems" className="min-h-screen bg-white pt-24 pb-16 px-6" ref={sectionRef}>
+      <style>{scrollAnimationStyle}</style>
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-black text-dark-text mb-6 leading-tight">
+          <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight" style={{color: '#000000'}}>
             Recovery Shouldn't Wait for
             <br />
             Business Hours
           </h2>
-          <p className="text-lg text-dark-text/70 max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto" style={{color: '#000000', opacity: 0.7}}>
             Traditional recovery systems leave gaps exactly when support matters most
           </p>
         </div>
 
-        {/* Problem Cards Grid */}
+        {/* Cards Grid with Scroll Animation */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {problems.map((problem, index) => (
             <div
               key={index}
-              className={`${problem.bgColor} rounded-3xl p-8 transition-all duration-700 ease-in-out hover:scale-[1.05] hover:shadow-2xl hover:shadow-warm-gray/20 hover:-translate-y-2 cursor-pointer group border-2 border-transparent hover:border-warm-gray/30 relative overflow-hidden`}
+              ref={(el) => (cardRefs.current[index] = el)}
+              className={`rounded-3xl p-8 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl cursor-pointer group border-2 relative overflow-hidden ${
+                visibleCards.includes(index) 
+                  ? index % 2 === 0 
+                    ? 'card-slide-left' 
+                    : 'card-slide-right' 
+                  : 'opacity-0'
+              }`}
+              style={{
+                backgroundColor: '#FFFFFF',
+                borderColor: '#39ACD6',
+                boxShadow: '0 4px 15px rgba(57, 172, 214, 0.1)'
+              }}
             >
-              {/* Glow effect on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-warm-gray/0 via-warm-gray/0 to-warm-gray/0 group-hover:from-warm-gray/5 group-hover:via-transparent group-hover:to-warm-gray/5 transition-all duration-700 rounded-3xl"></div>
-              
-              <div className="relative z-10">
-                <div className="mb-6 text-dark-text/70">
-                  {problem.icon}
-                </div>
-                <h3 className="text-xl font-bold text-dark-text mb-4">
-                  {problem.title}
-                </h3>
-                <p className="text-dark-text/70 leading-relaxed">
-                  {problem.description}
-                </p>
+              {/* Image */}
+              <div className="mb-6 h-48 rounded-2xl overflow-hidden">
+                <img 
+                  src={problem.image} 
+                  alt={problem.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
               </div>
+
+              {/* Icon */}
+              <div className="mb-4" style={{color: '#0012FF'}}>
+                {problem.icon}
+              </div>
+
+              {/* Title */}
+              <h3 className="text-xl font-bold mb-4" style={{color: '#000000'}}>
+                {problem.title}
+              </h3>
+
+              {/* Description */}
+              <p className="leading-relaxed" style={{color: '#000000', opacity: 0.7}}>
+                {problem.description}
+              </p>
+
+              {/* Hover glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/0 via-transparent to-blue-400/0 group-hover:from-cyan-400/10 group-hover:via-transparent group-hover:to-blue-400/10 transition-all duration-500 rounded-3xl pointer-events-none"></div>
             </div>
           ))}
         </div>

@@ -76,20 +76,21 @@ const ChatSection = () => {
   }, []);
 
   return (
-    <section id="chat" className="min-h-screen bg-black pt-0 pb-16 px-6 relative" ref={sectionRef}>
+    <section id="chat" className="min-h-screen bg-white pt-0 pb-16 px-6 relative" ref={sectionRef}>
       <div className="relative z-10 max-w-6xl mx-auto pt-24">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <div className="inline-block px-6 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6">
-            <span className="text-white/90 font-semibold text-sm tracking-wider uppercase">Featured Experience</span>
+          <div className="inline-block px-6 py-2 bg-cyan-400/10 backdrop-blur-sm border border-cyan-400/30 rounded-full mb-6" style={{borderColor: '#39ACD6'}}>
+            <span className="font-semibold text-sm tracking-wider uppercase" style={{color: '#0012FF'}}>Featured Experience</span>
           </div>
           <BlurText 
             text="Hi Jhone, How can i help ?"
             delay={50}
             animateBy="words"
-            className="text-5xl md:text-6xl font-black text-dark-text mb-4 text-center"
+            className="text-5xl md:text-6xl font-black mb-4 text-center"
+            style={{color: '#000000'}}
           />
-          <p className="text-dark-text/60 text-lg max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto" style={{color: '#000000', opacity: 0.7}}>
             Experience real-time AI conversations designed to support your recovery journey
           </p>
         </div>
@@ -97,22 +98,22 @@ const ChatSection = () => {
         {/* Chat Feature Box */}
         <div className="relative">
           {/* Glow effect */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-white/20 via-white/10 to-white/20 rounded-3xl blur-2xl opacity-50"></div>
+          <div className="absolute -inset-1 rounded-3xl blur-2xl opacity-50" style={{background: 'linear-gradient(to right, rgba(0, 228, 255, 0.3), rgba(0, 18, 255, 0.2), rgba(57, 172, 214, 0.3))'}}></div>
           
           {/* Main Container */}
-          <div className="relative bg-black/90 backdrop-blur-xl border-2 border-white/20 rounded-3xl p-8 md:p-12 shadow-2xl min-h-[400px]">
+          <div className="relative backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl min-h-[400px]" style={{backgroundColor: '#FFFFFF', border: '2px solid #39ACD6'}}>
             {/* Chat Messages */}
             <div className="space-y-6 mb-8">
               {/* AI Message */}
               {showAiMessage && (
                 <div className="flex items-start gap-4 animate-fadeIn">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center flex-shrink-0 border border-white/20">
-                    <BiBot className="text-2xl text-white/90" />
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{backgroundColor: '#00E4FF', color: '#000000'}}>
+                    <BiBot className="text-2xl" />
                   </div>
-                  <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl rounded-tl-md px-6 py-4 max-w-2xl">
-                    <p className="text-white/90 leading-relaxed">
+                  <div className="rounded-2xl rounded-tl-md px-6 py-4 max-w-2xl" style={{backgroundColor: '#F0F8FF', border: '1px solid #39ACD6'}}>
+                    <p className="leading-relaxed" style={{color: '#000000'}}>
                       {aiText}
-                      {isTyping && <span className="inline-block w-0.5 h-5 bg-white/90 ml-1 animate-pulse"></span>}
+                      {isTyping && <span className="inline-block w-0.5 h-5 ml-1 animate-pulse" style={{backgroundColor: '#0012FF'}}></span>}
                     </p>
                   </div>
                 </div>
@@ -121,14 +122,14 @@ const ChatSection = () => {
               {/* User Message */}
               {showUserMessage && (
                 <div className="flex items-start gap-4 justify-end animate-fadeIn">
-                  <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl rounded-tr-md px-6 py-4 max-w-2xl">
-                    <p className="text-white/90 leading-relaxed">
+                  <div className="rounded-2xl rounded-tr-md px-6 py-4 max-w-2xl" style={{backgroundColor: '#E0F7FF', border: '1px solid #00E4FF'}}>
+                    <p className="leading-relaxed" style={{color: '#000000'}}>
                       {userText}
-                      {isUserTyping && <span className="inline-block w-0.5 h-5 bg-white/90 ml-1 animate-pulse"></span>}
+                      {isUserTyping && <span className="inline-block w-0.5 h-5 ml-1 animate-pulse" style={{backgroundColor: '#0012FF'}}></span>}
                     </p>
                   </div>
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center flex-shrink-0 border border-white/20">
-                    <BsPerson className="text-2xl text-white/90" />
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{backgroundColor: '#00E4FF', color: '#000000'}}>
+                    <BsPerson className="text-2xl" />
                   </div>
                 </div>
               )}
@@ -142,14 +143,27 @@ const ChatSection = () => {
                   placeholder="Ask anything...."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-6 py-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/30 text-white/90 placeholder-white/50 focus:outline-none focus:border-white/50 focus:bg-white/10 transition-all duration-300"
+                  className="w-full px-6 py-4 rounded-2xl focus:outline-none transition-all duration-300"
+                  style={{
+                    backgroundColor: '#F0F8FF',
+                    border: '2px solid #39ACD6',
+                    color: '#000000'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#00E4FF'}
+                  onBlur={(e) => e.target.style.borderColor = '#39ACD6'}
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                  <button className="p-2.5 hover:bg-white/10 rounded-xl transition-all duration-300 border border-transparent hover:border-white/20">
-                    <FiSend className="text-lg text-white/70 hover:text-white/90 transition-colors" />
+                  <button className="p-2.5 rounded-xl transition-all duration-300" style={{border: '1px solid #39ACD6'}} 
+                    onMouseEnter={(e) => {e.target.style.backgroundColor = '#00E4FF'; e.target.style.color = '#000000'}}
+                    onMouseLeave={(e) => {e.target.style.backgroundColor = 'transparent'; e.target.style.color = '#0012FF'}}
+                  >
+                    <FiSend className="text-lg" style={{color: '#0012FF'}} />
                   </button>
-                  <button className="p-2.5 hover:bg-white/10 rounded-xl transition-all duration-300 border border-transparent hover:border-white/20">
-                    <HiPaperClip className="text-lg text-white/70 hover:text-white/90 transition-colors" />
+                  <button className="p-2.5 rounded-xl transition-all duration-300" style={{border: '1px solid #39ACD6'}}
+                    onMouseEnter={(e) => {e.target.style.backgroundColor = '#00E4FF'; e.target.style.color = '#000000'}}
+                    onMouseLeave={(e) => {e.target.style.backgroundColor = 'transparent'; e.target.style.color = '#0012FF'}}
+                  >
+                    <HiPaperClip className="text-lg" style={{color: '#0012FF'}} />
                   </button>
                 </div>
               </div>
