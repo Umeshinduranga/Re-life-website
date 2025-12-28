@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BsClock, BsCurrencyDollar } from 'react-icons/bs';
+import { BsClock, BsCurrencyDollar, BsArrowRight } from 'react-icons/bs';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 import { MdOutlineBarChart } from 'react-icons/md';
 import { TbPackage } from 'react-icons/tb';
@@ -127,9 +127,12 @@ const ProblemsSection = () => {
   }, [problems.length]);
 
   return (
-    <section id="problems" className="min-h-screen bg-white pt-24 pb-16 px-6" ref={sectionRef}>
+    <section id="problems" className="min-h-screen pt-24 pb-16 px-6" ref={sectionRef}
+      style={{
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #e8f4f8 100%)'
+      }}>
       <style>{scrollAnimationStyle}</style>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Heading */}
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight" style={{color: '#000000'}}>
@@ -142,13 +145,13 @@ const ProblemsSection = () => {
           </p>
         </div>
 
-        {/* Cards Grid with Scroll Animation */}
+        {/* Cards Grid with Image Overlay Design */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {problems.map((problem, index) => (
             <div
               key={index}
               ref={(el) => (cardRefs.current[index] = el)}
-              className={`rounded-3xl p-8 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl cursor-pointer group border-2 relative overflow-hidden ${
+              className={`rounded-[24px] overflow-hidden transition-all duration-500 ease-in-out hover:scale-105 cursor-pointer group relative h-[380px] ${
                 visibleCards.includes(index) 
                   ? index % 2 === 0 
                     ? 'card-slide-left' 
@@ -156,37 +159,50 @@ const ProblemsSection = () => {
                   : 'opacity-0'
               }`}
               style={{
-                backgroundColor: '#FFFFFF',
-                borderColor: '#39ACD6',
-                boxShadow: '0 4px 15px rgba(57, 172, 214, 0.1)'
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+                boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.1)'
               }}
             >
-              {/* Image */}
-              <div className="mb-6 h-48 rounded-2xl overflow-hidden">
+              {/* Background Image */}
+              <div className="absolute inset-0">
                 <img 
                   src={problem.image} 
                   alt={problem.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
+                {/* Subtle dark overlay for text readability */}
+                <div 
+                  className="absolute inset-0 transition-opacity duration-500"
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5))'
+                  }}
+                ></div>
               </div>
 
-              {/* Icon */}
-              <div className="mb-4" style={{color: '#0012FF'}}>
-                {problem.icon}
+              {/* Content Overlay */}
+              <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                {/* Bottom Section - Text Content with Glassmorphism */}
+                <div className="space-y-3">
+                  <div className="rounded-2xl p-4"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.15)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)'
+                    }}>
+                    {/* Title */}
+                    <h3 className="text-xl font-bold mb-2 text-white">
+                      {problem.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-sm text-white/90 leading-relaxed">
+                      {problem.description}
+                    </p>
+                  </div>
+                </div>
               </div>
-
-              {/* Title */}
-              <h3 className="text-xl font-bold mb-4" style={{color: '#000000'}}>
-                {problem.title}
-              </h3>
-
-              {/* Description */}
-              <p className="leading-relaxed" style={{color: '#000000', opacity: 0.7}}>
-                {problem.description}
-              </p>
-
-              {/* Hover glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/0 via-transparent to-blue-400/0 group-hover:from-cyan-400/10 group-hover:via-transparent group-hover:to-blue-400/10 transition-all duration-500 rounded-3xl pointer-events-none"></div>
             </div>
           ))}
         </div>

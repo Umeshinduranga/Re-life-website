@@ -32,7 +32,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="relative py-20 bg-[#2A2A2A]">
+    <section id="faq" className="relative py-20 bg-[#2A2A2A]">
       <div className="relative max-w-4xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-12">

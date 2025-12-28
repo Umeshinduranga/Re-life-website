@@ -81,7 +81,7 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <section ref={containerRef} className="min-h-screen bg-[#e3e8ef] py-32 px-6 overflow-hidden font-sans pb-48">
+    <section id="how-it-works" ref={containerRef} className="min-h-screen bg-[#e3e8ef] py-32 px-6 overflow-hidden font-sans pb-48">
       <div className="max-w-5xl mx-auto">
         
         {/* Header */}
