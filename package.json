@@ -1,43 +1,23 @@
 {
-  "name": "re-life-landing",
+  "name": "re-life-monorepo",
   "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "@gsap/react": "^2.1.2",
-    "gsap": "^3.13.0",
-    "motion": "^12.23.24",
-    "ogl": "^1.0.11",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.11.0",
-    "react-scripts": "5.0.1"
+  "workspaces": [
+    "packages/*",
+    "packages/recovery-system/backend",
+    "packages/recovery-system/frontend"
+  ],
+  "scripts": {
+    "landing:dev": "npm run start --workspace=packages/landing",
+    "landing:build": "npm run build --workspace=packages/landing",
+    "recovery:backend": "npm run dev --workspace=packages/recovery-system/backend",
+    "recovery:frontend": "npm run dev --workspace=packages/recovery-system/frontend",
+    "dev:all": "concurrently \"npm run landing:dev\" \"npm run recovery:backend\" \"npm run recovery:frontend\"",
+    "install:all": "npm install",
+    "clean": "powershell -Command \"Remove-Item -Recurse -Force node_modules, packages/*/node_modules, packages/recovery-system/*/node_modules -ErrorAction SilentlyContinue\""
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.5"
+    "concurrently": "^8.2.2"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "description": "Re-Life monorepo - Landing page and RAG-based addiction recovery system"
 }
