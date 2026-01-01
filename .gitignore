@@ -28,6 +28,7 @@ yarn-error.log*
 
 # Cache folders
 .cache/
+.next/
 
 # Markdown files (except README.md)
 *.md
