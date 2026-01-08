@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
+import { Check } from 'lucide-react'; 
 
 // ---------------------------------------------------------
 // HERE IS THE EXPORT! 👇
@@ -54,8 +55,8 @@ export default function AddictionSelectionPage() {
   return (
     <div className="min-h-screen w-full bg-[#F0F8FF] flex flex-col items-center justify-center p-6">
       
-      <div className="text-center max-w-3xl mb-12">
-        <h1 className="text-3xl md:text-5xl font-bold text-black mb-4">
+      <div className="text-center max-w-3xl mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-black mb-4">
           What would you like to focus on?
         </h1>
         <p className="text-gray-600 text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto">
@@ -63,7 +64,7 @@ export default function AddictionSelectionPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl mb-8">
         {options.map((option) => {
           const isSelected = selectedItems.includes(option.id);
           return (
@@ -71,18 +72,27 @@ export default function AddictionSelectionPage() {
               key={option.id}
               onClick={() => toggleSelection(option.id)}
               className={`
-                cursor-pointer rounded-3xl p-8 transition-all duration-300 shadow-sm
-                flex flex-col items-center text-center justify-center h-48 md:h-56
+                cursor-pointer rounded-3xl p-6 transition-all duration-300 shadow-sm
+                flex flex-col items-center text-center justify-center h-40 md:h-48 relative
                 ${isSelected 
                   ? 'bg-blue-300 ring-4 ring-blue-400/50 scale-[1.02]' 
                   : 'bg-gradient-to-br from-[#D6EAF8] to-[#AED6F1] hover:shadow-md hover:scale-[1.01]' 
                 }
               `}
             >
-              <h3 className="text-xl md:text-2xl font-bold text-[#1F618D] mb-3">
+              {/* Selection Indicator Circle */}
+              <div className={`absolute top-4 right-4 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                isSelected 
+                  ? 'bg-green-500 border-green-600' 
+                  : 'border-gray-400 bg-white'
+              }`}>
+                {isSelected && <Check className="w-4 h-4 text-white" strokeWidth={3} />}
+              </div>
+
+              <h3 className="text-lg md:text-xl font-bold text-[#1F618D] mb-2">
                 {option.title}
               </h3>
-              <p className="text-[#5D6D7E] text-sm md:text-base font-light px-4">
+              <p className="text-[#5D6D7E] text-xs md:text-sm font-light px-3">
                 {option.description}
               </p>
             </div>
