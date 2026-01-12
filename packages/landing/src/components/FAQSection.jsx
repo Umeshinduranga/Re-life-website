@@ -32,19 +32,19 @@ const FAQSection = () => {
   };
 
   return (
-    <section id="faq" className="relative py-20 bg-[#2A2A2A]">
+    <section id="faq" className="relative py-20 bg-[#e3e8ef]">
       <div className="relative max-w-4xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-block mb-4">
-            <span className="text-purple-400 font-bold text-sm tracking-wider uppercase px-4 py-2 bg-purple-500/10 rounded-full border border-purple-500/20">
+            <span className="text-cyan-700 font-bold text-sm tracking-wider uppercase px-4 py-2 bg-cyan-50 rounded-full border border-cyan-200">
               Frequently Asked Questions
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
             Got Questions?
           </h2>
-          <p className="text-base text-gray-400 max-w-2xl mx-auto">
+          <p className="text-base text-slate-600 max-w-2xl mx-auto">
             Everything you need to know about RE-LIFE
           </p>
         </div>
@@ -57,7 +57,7 @@ const FAQSection = () => {
             return (
               <div
                 key={index}
-                className="group relative bg-white/5 border border-white/10 rounded-xl hover:border-purple-500/30 transition-colors duration-200"
+                className="group relative bg-white border border-slate-200 rounded-xl hover:border-cyan-400 hover:shadow-md transition-all duration-200"
                 style={{ willChange: 'border-color' }}
               >
                 {/* Question Button */}
@@ -65,11 +65,11 @@ const FAQSection = () => {
                   onClick={() => toggleFAQ(index)}
                   className="w-full px-5 py-4 flex items-center justify-between gap-4 text-left"
                 >
-                  <span className="text-base font-semibold text-white group-hover:text-purple-400 transition-colors duration-200">
+                  <span className="text-base font-semibold text-slate-900 group-hover:text-cyan-700 transition-colors duration-200">
                     {faq.question}
                   </span>
-                  <div className={`flex-shrink-0 w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white transition-all duration-200 ${
-                    isOpen ? 'rotate-180 bg-purple-500/20' : 'group-hover:bg-white/15'
+                  <div className={`flex-shrink-0 w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 transition-all duration-200 ${
+                    isOpen ? 'rotate-180 bg-cyan-100 text-cyan-700' : 'group-hover:bg-slate-200'
                   }`}>
                     {isOpen ? <BsDash className="text-xl" /> : <BsPlus className="text-xl" />}
                   </div>
@@ -83,8 +83,8 @@ const FAQSection = () => {
                   style={{ overflow: 'hidden' }}
                 >
                   <div className="px-5 pb-4">
-                    <div className="w-full h-px bg-white/10 mb-3"></div>
-                    <p className="text-gray-300 leading-relaxed text-sm">
+                    <div className="w-full h-px bg-slate-200 mb-3"></div>
+                    <p className="text-slate-600 leading-relaxed text-sm">
                       {faq.answer}
                     </p>
                   </div>
@@ -94,18 +94,18 @@ const FAQSection = () => {
           })}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Bottom CTA - Link to Contact Form */}
         <div className="text-center">
-          <div className="bg-purple-500/10 border border-purple-500/20 rounded-2xl p-6">
-            <h3 className="text-xl font-bold text-white mb-2">
+          <div className="bg-cyan-50 border border-cyan-200 rounded-2xl p-6">
+            <h3 className="text-xl font-bold text-slate-900 mb-2">
               Still have questions?
             </h3>
-            <p className="text-gray-400 mb-5 text-sm max-w-xl mx-auto">
-              Our support team is here to help. Reach out anytime and we'll get back to you within 24 hours.
+            <p className="text-slate-600 mb-5 text-sm max-w-xl mx-auto">
+              Head to our <a href="#contact" className="text-cyan-700 font-semibold hover:text-cyan-800 transition">Contact Us</a> form below and drop us a message. We'll get back to you within 24 hours.
             </p>
-            <button className="px-7 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-full font-bold hover:scale-105 transition-transform duration-200 shadow-lg shadow-purple-500/30">
-              Contact Support
-            </button>
+            <a href="#contact" className="inline-flex px-7 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-white rounded-full font-bold hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-200">
+              Go to Contact Form
+            </a>
           </div>
         </div>
       </div>
