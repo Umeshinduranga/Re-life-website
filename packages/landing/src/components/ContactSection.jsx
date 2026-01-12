@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker } from 'react-icons/hi';
 import { BsSend, BsCheckCircle } from 'react-icons/bs';
 import freedom1 from '../assets/freedom1.jpg';
 
