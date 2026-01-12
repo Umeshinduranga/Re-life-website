@@ -98,21 +98,17 @@ const ContactSection = () => {
         </div>
 
         {/* Visual side */}
-        <div className="relative w-full h-80 sm:h-96 lg:min-h-[480px] lg:h-auto flex items-center justify-center">
+        <div className="relative w-full h-80 sm:h-96 lg:min-h-[500px] flex items-center justify-center">
           <div
-            className="relative w-full h-full max-w-[520px] overflow-hidden shadow-lg sm:shadow-2xl border border-white/60 rounded-3xl"
-            style={{
-              clipPath: 'path("M150 0c60 0 120 40 170 70s90 70 100 120c10 50-20 110-60 160s-90 90-150 100-130-10-170-50-60-100-40-150 80-90 120-140S90 0 150 0z")',
-              background: 'linear-gradient(135deg, rgba(15,23,42,0.85), rgba(15,23,42,0.65))'
-            }}
+            className="relative w-full h-full overflow-hidden shadow-lg sm:shadow-2xl border border-white/60 rounded-3xl"
           >
             <img
               src={freedom1}
               alt="Freedom and recovery"
-              className="absolute inset-0 w-full h-full object-cover"
+              className="w-full h-full object-cover"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/60 via-slate-900/35 to-slate-900/10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-slate-900/20 to-transparent" />
             <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 text-white space-y-2 drop-shadow-lg">
               <div className="text-xs sm:text-sm uppercase tracking-[0.16em] text-slate-200">Recovery, reflected</div>
               <div className="text-lg sm:text-2xl font-bold">Calm waters, clearer mind.</div>
