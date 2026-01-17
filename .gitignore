@@ -11,6 +11,10 @@ node_modules/
 build/
 dist/
 
+# Next.js
+.next/
+out/
+
 # misc
 .DS_Store
 .env
@@ -29,6 +33,6 @@ yarn-error.log*
 # Cache folders
 .cache/
 
-# Markdown files (except README.md)
-*.md
-!README.md
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
