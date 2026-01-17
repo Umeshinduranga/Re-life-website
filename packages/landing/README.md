@@ -19,11 +19,11 @@ A futuristic, dark-themed landing page for RE-LIFE - Your AI Powered Companion f
 - ⚡ Smooth scroll-triggered animations
 - 🎭 Interactive glassmorphism cards with hover effects
 - 🔄 Modern futuristic UI with gradient overlays
-- 🎨 Custom animations and transitions
+- 🎨 Custom animations and transitions.
 
 ## Getting Started
 
-### Installation
+### Installation setup
 
 1. Install dependencies:
 ```bash
