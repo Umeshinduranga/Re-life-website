@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm install && npm run landing:build",
+  "buildCommand": "npm run landing:build",
   "outputDirectory": "packages/landing/build",
   "installCommand": "npm install",
   "git": {

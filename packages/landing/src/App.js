@@ -10,6 +10,7 @@ const FeaturesSection = lazy(() => import('./components/FeaturesSection'));
 const HowItWorksSection = lazy(() => import('./components/HowItWorksSection'));
 const TechnologySection = lazy(() => import('./components/TechnologySection'));
 const FAQSection = lazy(() => import('./components/FAQSection'));
+const ContactSection = lazy(() => import('./components/ContactSection'));
 const FooterSection = lazy(() => import('./components/FooterSection'));
 
 // Loading fallback component
@@ -45,6 +46,9 @@ function App() {
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
           <FAQSection />
+        </Suspense>
+        <Suspense fallback={<SectionLoader />}>
+          <ContactSection />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
           <FooterSection />
