@@ -175,15 +175,15 @@ const FooterSection = () => {
             © {currentYear} Re-Life. All rights reserved.
           </p>
           <div className="flex items-center space-x-6 text-sm">
-            <a href="#" className="text-light-gray hover:text-accent-blue transition-colors">
+            <button className="text-light-gray hover:text-accent-blue transition-colors bg-transparent border-0 cursor-pointer">
               Status
-            </a>
-            <a href="#" className="text-light-gray hover:text-accent-blue transition-colors">
+            </button>
+            <button className="text-light-gray hover:text-accent-blue transition-colors bg-transparent border-0 cursor-pointer">
               Support
-            </a>
-            <a href="#" className="text-light-gray hover:text-accent-blue transition-colors">
+            </button>
+            <button className="text-light-gray hover:text-accent-blue transition-colors bg-transparent border-0 cursor-pointer">
               Documentation
-            </a>
+            </button>
           </div>
         </div>
       </div>
